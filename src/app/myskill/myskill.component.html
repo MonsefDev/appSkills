@@ -50,11 +50,11 @@
                               <label for="price">Price:</label>
                               <input type="text" class="form-control" id="price" placeholder="Enter Your Price" name="price" [(ngModel)]="skill.price">
                             </div>
-                          <button type="submit" class="btn btn-primary" (click)="onEdit($key)">Edit Skill</button>
+                          <button type="submit" class="btn btn-primary" (click)="onEdit(item.$key)" aria-label="Close">Edit Skill</button>
                           </form>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
                     </div>
                   </div>
                 </div>

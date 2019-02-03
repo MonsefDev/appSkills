@@ -24,8 +24,7 @@ export class AddskilComponent implements OnInit {
 
   }
 
-  insertSkill(){
- 
+  insertSkill(){ 
     this.itemList.push(this.skill);
     this.toastr.success('New SKill Added with successfully','EMP. patients')
     this.router.navigate(['/myskill']);

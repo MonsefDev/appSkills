@@ -14,33 +14,41 @@ export class MyskillComponent implements OnInit {
 
   skill=new Skills();
  
-  itemList:AngularFireList<any>;
+  itemList:any=[];
   itemarray=[];
-  constructor(private db:AngularFireDatabase,private toastr: ToastrService) {
+  constructor(private db:AngularFireDatabase,private toastr: ToastrService,private router:Router) {
    this.itemList=db.list('skill');
    this.itemList.snapshotChanges().subscribe(
      actions=>{
-        actions.forEach(action=>{
+       if(actions)
+      this.itemarray=actions.map(item=> Object.assign(item.payload.toJSON(),{$key:item.key}))
+
+       /* actions.forEach(action=>{
           let y= action.payload.toJSON()
           y['$key']=action.key;
          this.itemarray.push(y);
-          
+         
+         
         })
-     })
+      
+     })*/
+     
      console.log(this.itemarray);
-   }
+   })
+  }
 
     onUpdate($key){
-      this.itemarray.forEach(element => {
-        if(element['$key']==$key){
-         console.log(element['$key']);
-         this.skill.name=element['name'];
-         this.skill.number=element['number'];
-         this.skill.email=element['email'];
-         this.skill.myskill=element['myskill'];
-         this.skill.price=element['price'];
+      let skill:any = this.itemarray.find(e=>e.$key==$key);
+      
+        if(skill){
+         console.log(skill.$key);
+         this.skill.name=skill.name;
+         this.skill.number=skill.number;
+         this.skill.email=skill.email;
+         this.skill.myskill=skill.myskill;
+         this.skill.price=skill.price;
         }
-      });
+      
    }
 
    onEdit($key){
@@ -50,17 +58,35 @@ export class MyskillComponent implements OnInit {
         this.skill.myskill;
         this.skill.price ;
     
-     // console.log('new '+this.skill.name+' '+this.skill.number+' '+this.skill.email+' '+this.skill.price);
-      this.itemList.set($key,{
+
+       /// this.itemList.set($key,this.skill);
+   console.log('key'+$key+'new '+this.skill.name+' '+this.skill.number+' '+this.skill.email+' '+this.skill.price);
+   this.itemList.set($key,{
+     
        name: this.skill.name,
        number: this.skill.number,
        email: this.skill.email,
        myskill:this.skill.myskill,
        price: this.skill.price
-      });
+      }); 
+      console.log("-LXdTMCOWmaHMupZFF2h");
+      console.log($key);
+
+      this.toastr.success('SKill Edited with successfully','Skill.');
+        let a=document.getElementsByClassName('modal-backdrop fade in');
+        a[0].classList.remove("modal-backdrop");    
+
+     /* this.itemList.push({
+        name: this.skill.name,
+        number: this.skill.number,
+        email: this.skill.email,
+        myskill:this.skill.myskill,
+        price: this.skill.price
+       })*/
+    }
+
+
  
-    
-   }
    onDelete($key){
    this.itemList.remove($key);
    this.itemarray=[];
