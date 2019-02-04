@@ -19,17 +19,33 @@ export class NavbarComponent implements OnInit {
     this.user=afAuth.authState;
 
     let status=localStorage.getItem('islogin')
-    this.islogin=false;
+    console.log(status);
+   
+    if(status==='true')
+    {
+      this.islogin=true;
+      console.log('logged in');
+      
+    }
+    else
+    {
+      this.islogin=false;
+      console.log('not logged in');
+    }
 
-   /* firebase.auth().onAuthStateChanged(function(user){
+    /*firebase.auth().onAuthStateChanged(function(user){
       if(user)
       {
         this.islogin=true;
+        console.log('logged in', user.email);
+        
       }
       else
       {
         this.islogin=false;
+        console.log('not logged in');
       }
+    
     })
     this.router.navigate(['/login']);*/
   }
@@ -37,6 +53,7 @@ export class NavbarComponent implements OnInit {
   logout(){
     this.afAuth.auth.signOut();
     this.islogin=false;
+    localStorage.setItem('islogin','false');
     this.router.navigate(['/login']);
   }
  

@@ -1,35 +1,106 @@
- 
+<!--  
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">Add Skills</div>
     <div class="panel-body">   
-      <form>
-        <div class="form-group">
-          <label for="nom">Nom:</label>
-          <input type="text" class="form-control" id="nom" placeholder="Enter your Name" name="name" [(ngModel)]="skill.name"> 
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="form-group" [class.has-error]="name.invalid" [class.has-success]="name.valid">
+          <label for="nom">Name:</label>
+
+          <input type="text" class="form-control" id="nom" placeholder="Enter your Name" name="name" [(ngModel)]="skill.name" required> 
+          <span class="help-block" *ngIf="name.errors?.required">
+                Name is required
+            </span>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="number.invalid" [class.has-success]="number.valid">
           <label for="nom">Tel:</label>
-          <input type="text" class="form-control" id="tel" placeholder="Enter Your Number" name="number" [(ngModel)]="skill.number">
+          <input type="text" class="form-control" id="tel" placeholder="Enter Your Number" name="number" [(ngModel)]="skill.number" required>
+          <span class="help-block" *ngIf="name.errors?.required">
+              Number is required
+          </span>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="email.invalid" [class.has-success]="email.valid">
           <label for="email">Email:</label>
-          <input type="Email" class="form-control" id="email" placeholder="Enter Your email" name="email" [(ngModel)]="skill.email">
+          <input type="Email" class="form-control" id="email" placeholder="Enter Your email" name="email" [(ngModel)]="skill.email" required>
+          <span class="help-block" *ngIf="email.errors?.required">
+              Email is required
+          </span>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="myskill.invalid" [class.has-success]="myskill.valid"> 
           <label for="skill">Skill:</label>
-          <input type="text" class="form-control" id="skill" placeholder="Enter Your Skill" name="myskill" [(ngModel)]="skill.myskill">
+          <input type="text" class="form-control" id="skill" placeholder="Enter Your Skill" name="myskill" [(ngModel)]="skill.myskill" required>
+          <span class="help-block" *ngIf="myskill.errors?.required">
+              myskill is required
+          </span>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="price.invalid" [class.has-success]="price.valid"> 
           <label for="price">Price:</label>
-          <input type="text" class="form-control" id="price" placeholder="Enter Your Price" name="price" [(ngModel)]="skill.price">
+          <input type="text" class="form-control" id="price" placeholder="Enter Your Price" name="price" [(ngModel)]="skill.price" required>
+          <span class="help-block" *ngIf="price.errors?.required">
+              myskill is required
+          </span>
         </div>
-    
-        <div class="checkbox">
-          <label><input type="checkbox" name="remember"> Remember me</label>
-        </div>
-        <button type="submit" class="btn btn-primary" (click)='insertSkill()'>Add Skill</button>
+     
+        <button type="submit" class="btn btn-primary" (click)='insertSkill()' [disabled]="!form.valid">Add Skill</button>
       </form>
     </div>  
 </div>
+</div>  -->
+
+
+
+<!-- main app container -->
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h3>Angular 6 Template-Driven Form Validation</h3>
+                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                    <div class="form-group">
+                        <label for="firstName">Name</label>
+                        <input type="text" class="form-control" name="firstName" [(ngModel)]="skill.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required />
+                        <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
+                            <div *ngIf="name.errors.required">Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Number</label>
+                        <input type="text" class="form-control" name="lastName" [(ngModel)]="model.number" #number="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
+                        <div *ngIf="f.submitted && number.invalid" class="invalid-feedback">
+                            <div *ngIf="number.errors.required">Number is required</div>
+                        </div>
+                    </div>
+                                 
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" name="email" [(ngModel)]="skill.email"  #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                            <div *ngIf="email.errors.required">Email is required</div>
+                            <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Myskill</label>
+                        <input type="text" class="form-control" name="myskill" [(ngModel)]="skill.myskill"  #myskill="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
+                        <div *ngIf="f.submitted && myskill.invalid" class="invalid-feedback">
+                            <div *ngIf="myskill.errors.required">Number is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Price</label>
+                        <input type="text" class="form-control" name="myskill" [(ngModel)]="skill.price"  #price="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
+                        <div *ngIf="f.submitted && myskill.invalid" class="invalid-feedback">
+                            <div *ngIf="price.errors.required">Number is required</div>
+                        </div>
+                    </div>
+                  
+                    <div class="form-group">
+                        <button class="btn btn-primary" (click)='insertSkill()' [disabled]="f.invalid">Add Skill</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+
+ 

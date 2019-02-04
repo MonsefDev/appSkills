@@ -4,6 +4,7 @@ import { AngularFireDatabase,AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
+import { AngularFireAuth } from 'angularfire2/auth';
 @Component({
   selector: 'app-addskil',
   templateUrl: './addskil.component.html',
@@ -12,16 +13,29 @@ import { ToastrService } from 'ngx-toastr';
 export class AddskilComponent implements OnInit {
 
   skill=new Skills();
+  emaill:string;
+  uid:any;
  
   itemList:AngularFireList<any>;
 
-  constructor(private db:AngularFireDatabase,public router:Router,private toastr: ToastrService) {
+  constructor(private fire:AngularFireAuth,private db:AngularFireDatabase,public router:Router,private toastr: ToastrService) {
    this.itemList=db.list('skill');
+
+   let user=localStorage.getItem('email');
+   this.emaill=user;
+
+   console.log("email is : "+user);
+
+   this.uid=localStorage.getItem('uid');
+   console.log("uid is : "+this.uid);
    }
 
   ngOnInit() 
   {
+    let user=this.fire.auth.currentUser;
+    console.log(user);
 
+    console.log(this.skill.name)
   }
 
   insertSkill(){ 
@@ -30,5 +44,8 @@ export class AddskilComponent implements OnInit {
     this.router.navigate(['/myskill']);
   }
 
+  onSubmit() {
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.skill))
+  }
   
 }

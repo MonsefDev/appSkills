@@ -16,6 +16,7 @@ export class MyskillComponent implements OnInit {
  
   itemList:any=[];
   itemarray=[];
+  myuid:any;
   constructor(private db:AngularFireDatabase,private toastr: ToastrService,private router:Router) {
    this.itemList=db.list('skill');
    this.itemList.snapshotChanges().subscribe(
@@ -32,16 +33,18 @@ export class MyskillComponent implements OnInit {
         })
       
      })*/
-     
+     this.myuid=localStorage.getItem('uid');
      console.log(this.itemarray);
    })
+
+  
   }
 
     onUpdate($key){
       let skill:any = this.itemarray.find(e=>e.$key==$key);
       
         if(skill){
-         console.log(skill.$key);
+         console.log("key find "+skill.$key);
          this.skill.name=skill.name;
          this.skill.number=skill.number;
          this.skill.email=skill.email;
@@ -57,11 +60,10 @@ export class MyskillComponent implements OnInit {
         this.skill.email;
         this.skill.myskill;
         this.skill.price ;
-    
+   
+       console.log('key'+$key+'new '+this.skill.name+' '+this.skill.number+' '+this.skill.email+' '+this.skill.price);
 
-       /// this.itemList.set($key,this.skill);
-   console.log('key'+$key+'new '+this.skill.name+' '+this.skill.number+' '+this.skill.email+' '+this.skill.price);
-   this.itemList.set($key,{
+      this.itemList.set($key,{
      
        name: this.skill.name,
        number: this.skill.number,
@@ -69,8 +71,9 @@ export class MyskillComponent implements OnInit {
        myskill:this.skill.myskill,
        price: this.skill.price
       }); 
+
       console.log("-LXdTMCOWmaHMupZFF2h");
-      console.log($key);
+      console.log("key current "+$key);
 
       this.toastr.success('SKill Edited with successfully','Skill.');
         let a=document.getElementsByClassName('modal-backdrop fade in');
@@ -83,6 +86,7 @@ export class MyskillComponent implements OnInit {
         myskill:this.skill.myskill,
         price: this.skill.price
        })*/
+     
     }
 
 

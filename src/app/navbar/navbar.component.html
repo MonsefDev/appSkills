@@ -5,13 +5,13 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a routerLink="/">WorkShip</a></li>
-      <li><a routerLink="login"><span class="glyphicon glyphicon-log-in"  ></span>Login </a></li>
-      <li><a routerLink="register"><span class="glyphicon glyphicon-log-in" ></span>Register </a></li>
+      <li><a routerLink="login" *ngIf="!islogin"><span class="glyphicon glyphicon-log-in" ></span>Login </a></li>
+      <li><a routerLink="register" *ngIf="!islogin"><span class="glyphicon glyphicon-log-in"></span>Register </a></li>
       <li><a routerLink="allskills">Skills</a></li>
       <li><a routerLink="myskill">My Skills</a></li>
     </ul>
     <ul class="nav navbar-nav">
-    <li class="dropdown nav navbar-nav navbar-right"  ><a class="dropdown-toggle" data-toggle="dropdown" href="#">Profil <span class="caret"></span></a>
+    <li class="dropdown nav navbar-nav navbar-right"  *ngIf="islogin"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Profil <span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li><span class="glyphicon glyphicon-user"></span> <a routerLink="/addskill">Add</a></li>
         <li><span class="glyphicon glyphicon-log-out"></span> <a (click)="logout()" >LogOut</a></li>
